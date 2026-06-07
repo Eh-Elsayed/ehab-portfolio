@@ -89,6 +89,66 @@ export default function Portfolio() {
           </a>
         </div>
 
+        {/* Behance Photography Showcase */}
+        <div className="mb-20">
+          <div className="flex items-center gap-4 mb-8">
+            <span className="text-xs tracking-[0.25em] uppercase text-[#555]">
+              Behance — Product Photography
+            </span>
+            <div className="flex-1 h-px bg-[#1a1a1a]" />
+            <a
+              href="https://www.behance.net/gallery/242268755/ASUS-ROG-Azoth-Extreme"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs text-[#444] hover:text-[#c8a96e] transition-colors tracking-widest uppercase flex items-center gap-1.5 flex-shrink-0"
+            >
+              View on Behance
+              <svg viewBox="0 0 24 24" className="w-3 h-3 opacity-60" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/>
+              </svg>
+            </a>
+          </div>
+
+          {/* Project label */}
+          <div className="flex items-center gap-4 mb-5">
+            <div className="border border-[#c8a96e]/30 px-3 py-1">
+              <span className="text-xs text-[#c8a96e] tracking-widest uppercase">ASUS ROG Azoth Extreme</span>
+            </div>
+            <span className="text-xs text-[#333]">Keyboard · Product Photography · 18 shots</span>
+          </div>
+
+          {/* Photo grid */}
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1.5">
+            {Array.from({ length: 18 }, (_, i) => {
+              const num = String(i + 1).padStart(2, "0");
+              const isFeature = i === 0 || i === 2;
+              return (
+                <a
+                  key={num}
+                  href="https://www.behance.net/gallery/242268755/ASUS-ROG-Azoth-Extreme"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`group relative overflow-hidden bg-[#111] block ${isFeature ? "md:col-span-2" : ""}`}
+                  style={{ aspectRatio: isFeature ? "16/9" : "4/3" }}
+                >
+                  <img
+                    src={`${import.meta.env.BASE_URL}portfolio/asus-rog-azoth/${num}.jpg`}
+                    alt={`ASUS ROG Azoth Extreme — shot ${i + 1}`}
+                    loading="lazy"
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300" />
+                  <div className="absolute bottom-2 left-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <span className="text-[9px] font-mono text-white/60 bg-black/50 px-1.5 py-0.5 backdrop-blur-sm">
+                      {num} / 18
+                    </span>
+                  </div>
+                </a>
+              );
+            })}
+          </div>
+        </div>
+
         {/* YouTube Videos */}
         <div className="mb-16">
           <div className="flex items-center gap-4 mb-8">
