@@ -1,4 +1,4 @@
-import { useState } from "react";
+// no useState needed — tabs merged
 
 const youtubeVideos = [
   {
@@ -114,9 +114,58 @@ const productReviews: { name: string; url: string; cat: string; hasPhotos?: bool
   { name: "RTX for Engineering & Design", url: "https://arabhardware.net/articles/rtx-engineering-designing-features", cat: "Article" },
 ];
 
-export default function Portfolio() {
-  const [photoTab, setPhotoTab] = useState<"reviews" | "photos">("reviews");
+function PhotoMarquee({ project }: { project: typeof behanceProjects[0] }) {
+  return (
+    <div className="relative overflow-hidden mt-3">
+      {/* Left fade */}
+      <div
+        className="absolute left-0 top-0 bottom-0 w-16 z-10 pointer-events-none"
+        style={{ background: "linear-gradient(to right, #080808, transparent)" }}
+      />
+      {/* Right fade */}
+      <div
+        className="absolute right-0 top-0 bottom-0 w-16 z-10 pointer-events-none"
+        style={{ background: "linear-gradient(to left, #080808, transparent)" }}
+      />
+      <div className="animate-marquee" style={{ animationDuration: `${project.shots * 4}s` }}>
+        {[...Array.from({ length: project.shots }), ...Array.from({ length: project.shots })].map((_, i) => {
+          const idx = i % project.shots;
+          const num = String(idx + 1).padStart(2, "0");
+          return (
+            <a
+              key={i}
+              href={project.behanceUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative flex-shrink-0 overflow-hidden bg-[#0d0d0d] border border-[#1e1e1e] hover:border-[#c8a96e]/40 transition-all duration-500 mx-1.5 block"
+              style={{ width: "280px", aspectRatio: "4/3" }}
+            >
+              <img
+                src={`${import.meta.env.BASE_URL}portfolio/${project.folder}/${num}.jpg`}
+                alt={`${project.name} — shot ${idx + 1}`}
+                loading="lazy"
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300" />
+              <div className="absolute top-2 left-2">
+                <span className="text-[10px] font-mono text-[#c8a96e]/90 bg-[#0a0a0a]/70 px-2 py-0.5 backdrop-blur-sm">
+                  {num}
+                </span>
+              </div>
+              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <span className="text-[10px] tracking-widest uppercase text-[#c8a96e]/80 bg-[#0a0a0a]/60 px-3 py-1.5 backdrop-blur-sm">
+                  View on Behance ↗
+                </span>
+              </div>
+            </a>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
 
+export default function Portfolio() {
   return (
     <div className="bg-[#080808] py-32">
       <div className="max-w-7xl mx-auto px-6">
@@ -151,7 +200,6 @@ export default function Portfolio() {
             </span>
             <div className="flex-1 h-px bg-[#1a1a1a]" />
           </div>
-
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             {youtubeVideos.map((video) => (
               <a
@@ -187,189 +235,109 @@ export default function Portfolio() {
           </div>
         </div>
 
-        {/* Product Photography — tabbed */}
+        {/* Product Photography & Reviews — merged, no tabs */}
         <div>
-          {/* Tab header row */}
-          <div className="flex items-center gap-0 mb-8">
-            <span className="text-xs tracking-[0.25em] uppercase text-[#555] mr-6 hidden sm:inline">
+          <div className="flex items-center gap-4 mb-8">
+            <span className="text-xs tracking-[0.25em] uppercase text-[#555]">
               Product Photography & Reviews
             </span>
-
-            {/* Tab buttons */}
-            <div className="flex border border-[#1a1a1a]">
-              <button
-                onClick={() => setPhotoTab("reviews")}
-                className={`px-5 py-2 text-xs tracking-widest uppercase transition-all duration-200 ${
-                  photoTab === "reviews"
-                    ? "bg-[#c8a96e]/10 text-[#c8a96e] border-r border-[#c8a96e]/20"
-                    : "text-[#444] hover:text-[#666] border-r border-[#1a1a1a]"
-                }`}
-              >
-                Reviews
-              </button>
-              <button
-                onClick={() => setPhotoTab("photos")}
-                className={`px-5 py-2 text-xs tracking-widest uppercase transition-all duration-200 flex items-center gap-2 ${
-                  photoTab === "photos"
-                    ? "bg-[#c8a96e]/10 text-[#c8a96e]"
-                    : "text-[#444] hover:text-[#666]"
-                }`}
-              >
-                <svg viewBox="0 0 24 24" className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/>
-                  <circle cx="12" cy="13" r="4"/>
-                </svg>
-                Photos
-              </button>
-            </div>
-
-            <div className="flex-1 h-px bg-[#1a1a1a] ml-4" />
+            <div className="flex-1 h-px bg-[#1a1a1a]" />
           </div>
 
-          {/* — REVIEWS TAB — */}
-          {photoTab === "reviews" && (
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
-              {productReviews.map((review) =>
-                review.hasPhotos ? (
-                  <div
-                    key={review.url}
-                    className="group flex flex-col justify-between p-4 bg-[#0a0a0a] border border-[#c8a96e]/25 hover:border-[#c8a96e]/50 hover:bg-[#0d0d0b] transition-all duration-300"
-                  >
-                    <div>
-                      <span className="text-[#c8a96e]/60 text-xs tracking-widest uppercase">
-                        {review.cat}
-                      </span>
-                      <p className="text-[#e8e2d9] text-sm font-['DM_Sans'] mt-1 leading-snug">
-                        {review.name}
-                      </p>
-                    </div>
-                    <div className="flex items-center justify-between mt-3 pt-3 border-t border-[#1a1a1a]">
-                      <a
-                        href={behanceProjects.find(p => p.name === review.name)?.behanceUrl ?? "#"}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-[9px] tracking-widest uppercase text-[#c8a96e]/70 hover:text-[#c8a96e] transition-colors flex items-center gap-1"
-                      >
-                        <svg viewBox="0 0 24 24" className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="2">
-                          <path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/>
-                          <circle cx="12" cy="13" r="4"/>
-                        </svg>
-                        {behanceProjects.find(p => p.name === review.name)?.shots ?? 0} Photos
-                      </a>
-                      <a
-                        href={review.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-xs text-[#444] hover:text-[#c8a96e]/60 transition-colors"
-                      >
-                        Review →
-                      </a>
-                    </div>
-                  </div>
-                ) : (
-                  <a
-                    key={review.url}
-                    href={review.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group flex flex-col justify-between p-4 bg-[#0a0a0a] border border-[#1a1a1a] hover:border-[#c8a96e]/20 hover:bg-[#0d0d0b] transition-all duration-300"
-                  >
-                    <div>
-                      <span className="text-[#444] text-xs tracking-widest uppercase group-hover:text-[#c8a96e]/60 transition-colors">
-                        {review.cat}
-                      </span>
-                      <p className="text-[#888] text-sm font-['DM_Sans'] mt-1 group-hover:text-[#e8e2d9] transition-colors leading-snug">
-                        {review.name}
-                      </p>
-                    </div>
-                    <span className="text-xs text-[#333] group-hover:text-[#c8a96e]/40 transition-colors mt-3 self-end">
-                      →
+          {/* Cards grid — all products */}
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
+            {productReviews.map((review) => {
+              const bp = behanceProjects.find(p => p.name === review.name);
+              return review.hasPhotos && bp ? (
+                /* Card WITH photos — gold border, two action links */
+                <div
+                  key={review.url}
+                  className="group flex flex-col justify-between p-4 bg-[#0a0a0a] border border-[#c8a96e]/25 hover:border-[#c8a96e]/50 hover:bg-[#0d0d0b] transition-all duration-300"
+                >
+                  <div>
+                    <span className="text-[#c8a96e]/60 text-xs tracking-widest uppercase">
+                      {review.cat}
                     </span>
-                  </a>
-                )
-              )}
-            </div>
-          )}
-
-          {/* — PHOTOS TAB — */}
-          {photoTab === "photos" && (
-            <div className="flex flex-col gap-10">
-              {behanceProjects.map((project) => (
-                <div key={project.id}>
-                  {/* Project label + Behance link */}
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center gap-4">
-                      <div className="border border-[#c8a96e]/30 px-3 py-1">
-                        <span className="text-xs text-[#c8a96e] tracking-widest uppercase">{project.name}</span>
-                      </div>
-                      <span className="text-xs text-[#444]">{project.cat} · {project.shots} shots</span>
-                    </div>
+                    <p className="text-[#e8e2d9] text-sm font-['DM_Sans'] mt-1 leading-snug">
+                      {review.name}
+                    </p>
+                  </div>
+                  <div className="flex items-center justify-between mt-3 pt-3 border-t border-[#1a1a1a]">
                     <a
-                      href={project.behanceUrl}
+                      href={bp.behanceUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-xs text-[#444] hover:text-[#c8a96e] transition-colors tracking-widest uppercase flex items-center gap-1.5 flex-shrink-0"
+                      className="text-[9px] tracking-widest uppercase text-[#c8a96e]/70 hover:text-[#c8a96e] transition-colors flex items-center gap-1"
                     >
-                      Behance
-                      <svg viewBox="0 0 24 24" className="w-3 h-3 opacity-60" fill="none" stroke="currentColor" strokeWidth="2">
-                        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/>
+                      <svg viewBox="0 0 24 24" className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/>
+                        <circle cx="12" cy="13" r="4"/>
                       </svg>
+                      {bp.shots} Photos
+                    </a>
+                    <a
+                      href={review.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-xs text-[#444] hover:text-[#c8a96e]/60 transition-colors"
+                    >
+                      Review →
                     </a>
                   </div>
-
-                  {/* Marquee strip — same style as Reels */}
-                  <div className="relative overflow-hidden">
-                    {/* Left fade */}
-                    <div className="absolute left-0 top-0 bottom-0 w-16 z-10 pointer-events-none"
-                      style={{ background: "linear-gradient(to right, #080808, transparent)" }} />
-                    {/* Right fade */}
-                    <div className="absolute right-0 top-0 bottom-0 w-16 z-10 pointer-events-none"
-                      style={{ background: "linear-gradient(to left, #080808, transparent)" }} />
-
-                    <div
-                      className="animate-marquee"
-                      style={{ animationDuration: `${project.shots * 4}s` }}
-                    >
-                      {[...Array.from({ length: project.shots }), ...Array.from({ length: project.shots })].map((_, i) => {
-                        const idx = i % project.shots;
-                        const num = String(idx + 1).padStart(2, "0");
-                        return (
-                          <a
-                            key={i}
-                            href={project.behanceUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="group relative flex-shrink-0 overflow-hidden bg-[#0d0d0d] border border-[#1e1e1e] hover:border-[#c8a96e]/40 transition-all duration-500 mx-1.5 block"
-                            style={{ width: "300px", aspectRatio: "4/3" }}
-                          >
-                            <img
-                              src={`${import.meta.env.BASE_URL}portfolio/${project.folder}/${num}.jpg`}
-                              alt={`${project.name} — shot ${idx + 1}`}
-                              loading="lazy"
-                              className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                            />
-                            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300" />
-                            {/* Shot counter badge */}
-                            <div className="absolute top-2 left-2">
-                              <span className="text-[10px] font-mono text-[#c8a96e]/90 bg-[#0a0a0a]/70 px-2 py-0.5 backdrop-blur-sm">
-                                {num}
-                              </span>
-                            </div>
-                            {/* Hover — view on Behance */}
-                            <div className="absolute inset-0 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                              <span className="text-[10px] tracking-widest uppercase text-[#c8a96e]/80 bg-[#0a0a0a]/60 px-3 py-1.5 backdrop-blur-sm">
-                                View on Behance ↗
-                              </span>
-                            </div>
-                          </a>
-                        );
-                      })}
-                    </div>
-                  </div>
                 </div>
-              ))}
-            </div>
-          )}
+              ) : (
+                /* Card WITHOUT photos — plain link card */
+                <a
+                  key={review.url}
+                  href={review.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex flex-col justify-between p-4 bg-[#0a0a0a] border border-[#1a1a1a] hover:border-[#c8a96e]/20 hover:bg-[#0d0d0b] transition-all duration-300"
+                >
+                  <div>
+                    <span className="text-[#444] text-xs tracking-widest uppercase group-hover:text-[#c8a96e]/60 transition-colors">
+                      {review.cat}
+                    </span>
+                    <p className="text-[#888] text-sm font-['DM_Sans'] mt-1 group-hover:text-[#e8e2d9] transition-colors leading-snug">
+                      {review.name}
+                    </p>
+                  </div>
+                  <span className="text-xs text-[#333] group-hover:text-[#c8a96e]/40 transition-colors mt-3 self-end">
+                    →
+                  </span>
+                </a>
+              );
+            })}
+          </div>
+
+          {/* Photo marquees — one per product, always visible */}
+          <div className="flex flex-col gap-10 mt-14">
+            {behanceProjects.map((project) => (
+              <div key={project.id}>
+                {/* Strip label */}
+                <div className="flex items-center justify-between mb-4 px-0">
+                  <div className="flex items-center gap-4">
+                    <div className="border border-[#c8a96e]/30 px-3 py-1">
+                      <span className="text-xs text-[#c8a96e] tracking-widest uppercase">{project.name}</span>
+                    </div>
+                    <span className="text-xs text-[#444]">{project.cat} · {project.shots} shots</span>
+                  </div>
+                  <a
+                    href={project.behanceUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xs text-[#444] hover:text-[#c8a96e] transition-colors tracking-widest uppercase flex items-center gap-1.5"
+                  >
+                    Behance
+                    <svg viewBox="0 0 24 24" className="w-3 h-3 opacity-60" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/>
+                    </svg>
+                  </a>
+                </div>
+                <PhotoMarquee project={project} />
+              </div>
+            ))}
+          </div>
         </div>
 
       </div>
