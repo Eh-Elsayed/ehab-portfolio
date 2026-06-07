@@ -244,8 +244,10 @@ export default function Portfolio() {
                       </p>
                     </div>
                     <div className="flex items-center justify-between mt-3 pt-3 border-t border-[#1a1a1a]">
-                      <button
-                        onClick={() => setPhotoTab("photos")}
+                      <a
+                        href={behanceProjects.find(p => p.name === review.name)?.behanceUrl ?? "#"}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="text-[9px] tracking-widest uppercase text-[#c8a96e]/70 hover:text-[#c8a96e] transition-colors flex items-center gap-1"
                       >
                         <svg viewBox="0 0 24 24" className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="2">
@@ -253,7 +255,7 @@ export default function Portfolio() {
                           <circle cx="12" cy="13" r="4"/>
                         </svg>
                         {behanceProjects.find(p => p.name === review.name)?.shots ?? 0} Photos
-                      </button>
+                      </a>
                       <a
                         href={review.url}
                         target="_blank"
@@ -291,16 +293,16 @@ export default function Portfolio() {
 
           {/* — PHOTOS TAB — */}
           {photoTab === "photos" && (
-            <div className="flex flex-col gap-16">
+            <div className="flex flex-col gap-10">
               {behanceProjects.map((project) => (
                 <div key={project.id}>
                   {/* Project label + Behance link */}
-                  <div className="flex items-center justify-between mb-5">
+                  <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-4">
                       <div className="border border-[#c8a96e]/30 px-3 py-1">
                         <span className="text-xs text-[#c8a96e] tracking-widest uppercase">{project.name}</span>
                       </div>
-                      <span className="text-xs text-[#333]">{project.cat} · Product Photography · {project.shots} shots</span>
+                      <span className="text-xs text-[#444]">{project.cat} · {project.shots} shots</span>
                     </div>
                     <a
                       href={project.behanceUrl}
@@ -315,35 +317,54 @@ export default function Portfolio() {
                     </a>
                   </div>
 
-                  {/* Photo grid */}
-                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1.5">
-                    {Array.from({ length: project.shots }, (_, i) => {
-                      const num = String(i + 1).padStart(2, "0");
-                      const isFeature = i === 0 || i === 2;
-                      return (
-                        <a
-                          key={num}
-                          href={project.behanceUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className={`group relative overflow-hidden bg-[#111] block ${isFeature ? "md:col-span-2" : ""}`}
-                          style={{ aspectRatio: isFeature ? "16/9" : "4/3" }}
-                        >
-                          <img
-                            src={`${import.meta.env.BASE_URL}portfolio/${project.folder}/${num}.jpg`}
-                            alt={`${project.name} — shot ${i + 1}`}
-                            loading="lazy"
-                            className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                          />
-                          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300" />
-                          <div className="absolute bottom-2 left-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                            <span className="text-[9px] font-mono text-white/60 bg-black/50 px-1.5 py-0.5 backdrop-blur-sm">
-                              {num} / {project.shots}
-                            </span>
-                          </div>
-                        </a>
-                      );
-                    })}
+                  {/* Marquee strip — same style as Reels */}
+                  <div className="relative overflow-hidden">
+                    {/* Left fade */}
+                    <div className="absolute left-0 top-0 bottom-0 w-16 z-10 pointer-events-none"
+                      style={{ background: "linear-gradient(to right, #080808, transparent)" }} />
+                    {/* Right fade */}
+                    <div className="absolute right-0 top-0 bottom-0 w-16 z-10 pointer-events-none"
+                      style={{ background: "linear-gradient(to left, #080808, transparent)" }} />
+
+                    <div
+                      className="animate-marquee"
+                      style={{ animationDuration: `${project.shots * 4}s` }}
+                    >
+                      {[...Array.from({ length: project.shots }), ...Array.from({ length: project.shots })].map((_, i) => {
+                        const idx = i % project.shots;
+                        const num = String(idx + 1).padStart(2, "0");
+                        return (
+                          <a
+                            key={i}
+                            href={project.behanceUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="group relative flex-shrink-0 overflow-hidden bg-[#0d0d0d] border border-[#1e1e1e] hover:border-[#c8a96e]/40 transition-all duration-500 mx-1.5 block"
+                            style={{ width: "300px", aspectRatio: "4/3" }}
+                          >
+                            <img
+                              src={`${import.meta.env.BASE_URL}portfolio/${project.folder}/${num}.jpg`}
+                              alt={`${project.name} — shot ${idx + 1}`}
+                              loading="lazy"
+                              className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                            />
+                            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300" />
+                            {/* Shot counter badge */}
+                            <div className="absolute top-2 left-2">
+                              <span className="text-[10px] font-mono text-[#c8a96e]/90 bg-[#0a0a0a]/70 px-2 py-0.5 backdrop-blur-sm">
+                                {num}
+                              </span>
+                            </div>
+                            {/* Hover — view on Behance */}
+                            <div className="absolute inset-0 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                              <span className="text-[10px] tracking-widest uppercase text-[#c8a96e]/80 bg-[#0a0a0a]/60 px-3 py-1.5 backdrop-blur-sm">
+                                View on Behance ↗
+                              </span>
+                            </div>
+                          </a>
+                        );
+                      })}
+                    </div>
                   </div>
                 </div>
               ))}
