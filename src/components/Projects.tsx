@@ -81,7 +81,7 @@ export default function Projects() {
             <div className="absolute inset-0 border border-transparent group-hover:border-[#c8a96e]/15 transition-all duration-300 pointer-events-none" />
 
             <div className="flex items-start justify-between mb-6">
-              <span className="font-['Playfair_Display'] text-4xl text-[#1d1d1d] group-hover:text-[#c8a96e]/20 transition-colors leading-none">
+              <span className="font-['Playfair_Display'] text-4xl text-[#c8a96e]/50 group-hover:text-[#c8a96e] transition-colors leading-none" style={{ textShadow: 'var(--tw-group-hover, 0 0 20px rgba(200,169,110,0.3))' }}>
                 {project.num}
               </span>
               {project.highlight && (

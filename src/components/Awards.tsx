@@ -74,12 +74,12 @@ const ugrf = [
 ];
 
 const resultStyles: Record<string, string> = {
-  gold: "text-[#c8a96e] border-[#c8a96e]/40 bg-[#c8a96e]/5",
-  silver: "text-[#a0a0b0] border-[#a0a0b0]/40 bg-[#a0a0b0]/5",
-  finalist: "text-[#7a9fc0] border-[#7a9fc0]/40 bg-[#7a9fc0]/5",
-  award: "text-[#8fa87a] border-[#8fa87a]/40 bg-[#8fa87a]/5",
-  media: "text-[#9a7ac0] border-[#9a7ac0]/40 bg-[#9a7ac0]/5",
-  participate: "text-[#444] border-[#2a2a2a] bg-transparent",
+  gold: "text-[#c8a96e] border-[#c8a96e] bg-[#c8a96e]/10 font-semibold",
+  silver: "text-[#d0d0e0] border-[#d0d0e0]/60 bg-[#d0d0e0]/8",
+  finalist: "text-[#7a9fc0] border-[#7a9fc0]/50 bg-[#7a9fc0]/8",
+  award: "text-[#a8c890] border-[#a8c890]/50 bg-[#a8c890]/8",
+  media: "text-[#b89ad0] border-[#b89ad0]/50 bg-[#b89ad0]/8",
+  participate: "text-[#555] border-[#2a2a2a] bg-transparent",
 };
 
 export default function Awards() {
@@ -118,32 +118,36 @@ export default function Awards() {
       {/* Timeline grid */}
       <div className="relative">
         {/* Connecting line */}
-        <div className="absolute left-[3.25rem] top-0 bottom-0 w-px bg-[#1a1a1a] hidden md:block" />
+        <div className="absolute left-[3.25rem] top-0 bottom-0 w-px bg-[#c8a96e]/20 hidden md:block" />
 
         <div className="flex flex-col gap-0">
           {ugrf.map((item, idx) => (
             <div
               key={item.edition}
-              className="group relative grid md:grid-cols-[6.5rem_1fr] gap-0 items-start border-b border-[#111] last:border-0 hover:bg-[#0d0d0b] transition-colors duration-300"
+              className={`group relative grid md:grid-cols-[6.5rem_1fr] gap-0 items-start border-b border-[#111] last:border-0 transition-colors duration-300 ${
+                item.resultType === "gold"
+                  ? "hover:bg-[#0f0e0a] border-l-2 border-l-[#c8a96e]/40 hover:border-l-[#c8a96e]"
+                  : "hover:bg-[#0d0d0b]"
+              }`}
             >
               {/* Year / edition column */}
               <div className="hidden md:flex flex-col items-center pt-6 pb-6 pr-6 gap-1.5">
                 <div
-                  className={`w-2 h-2 rounded-full ring-4 ring-[#0a0a0a] z-10 transition-colors duration-300 ${
+                  className={`z-10 transition-all duration-300 rounded-full ring-4 ring-[#0a0a0a] ${
                     item.resultType === "gold"
-                      ? "bg-[#c8a96e]"
+                      ? "w-3 h-3 bg-[#c8a96e] shadow-[0_0_8px_rgba(200,169,110,0.8)]"
                       : item.resultType === "silver"
-                      ? "bg-[#a0a0b0]"
+                      ? "w-2.5 h-2.5 bg-[#d0d0e0]"
                       : item.resultType === "finalist"
-                      ? "bg-[#7a9fc0]"
+                      ? "w-2.5 h-2.5 bg-[#7a9fc0]"
                       : item.resultType === "award"
-                      ? "bg-[#8fa87a]"
+                      ? "w-2 h-2 bg-[#a8c890]"
                       : item.resultType === "media"
-                      ? "bg-[#9a7ac0]"
-                      : "bg-[#2a2a2a]"
+                      ? "w-2 h-2 bg-[#b89ad0]"
+                      : "w-2 h-2 bg-[#2a2a2a]"
                   }`}
                 />
-                <span className="text-[10px] font-mono text-[#333] group-hover:text-[#444] transition-colors tracking-wider">
+                <span className={`text-[10px] font-mono tracking-wider transition-colors ${item.resultType === "gold" ? "text-[#c8a96e]/70 group-hover:text-[#c8a96e]" : "text-[#333] group-hover:text-[#444]"}`}>
                   {item.month} {item.year}
                 </span>
               </div>
@@ -151,9 +155,17 @@ export default function Awards() {
               {/* Content */}
               <div className="py-6 pl-0 md:pl-8 pr-0 flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
                 {/* Edition badge */}
-                <div className="flex-shrink-0 w-14 h-14 border border-[#1a1a1a] group-hover:border-[#222] flex flex-col items-center justify-center transition-colors">
-                  <span className="font-['Playfair_Display'] text-lg text-[#c8a96e]/70 leading-none">{item.edition}</span>
-                  <span className="text-[9px] tracking-widest uppercase text-[#333] mt-0.5">UGRF</span>
+                <div className={`flex-shrink-0 w-14 h-14 flex flex-col items-center justify-center transition-all duration-300 border ${
+                  item.resultType === "gold"
+                    ? "border-[#c8a96e]/60 group-hover:border-[#c8a96e] bg-[#c8a96e]/5"
+                    : "border-[#1a1a1a] group-hover:border-[#2a2a2a]"
+                }`}>
+                  <span className={`font-['Playfair_Display'] text-lg leading-none transition-colors ${
+                    item.resultType === "gold" ? "text-[#c8a96e]" : "text-[#c8a96e]/50 group-hover:text-[#c8a96e]/70"
+                  }`}>{item.edition}</span>
+                  <span className={`text-[9px] tracking-widest uppercase mt-0.5 transition-colors ${
+                    item.resultType === "gold" ? "text-[#c8a96e]/50" : "text-[#333]"
+                  }`}>UGRF</span>
                 </div>
 
                 {/* Main content */}
