@@ -51,10 +51,29 @@ const youtubeVideos = [
   },
 ];
 
+const behanceProjects = [
+  {
+    id: "asus-rog-azoth",
+    name: "ASUS ROG Azoth Extreme",
+    cat: "Keyboard",
+    shots: 18,
+    behanceUrl: "https://www.behance.net/gallery/242268755/ASUS-ROG-Azoth-Extreme",
+    folder: "asus-rog-azoth",
+  },
+  {
+    id: "asus-rog-delta-ii",
+    name: "ASUS ROG Delta II",
+    cat: "Headset",
+    shots: 15,
+    behanceUrl: "https://www.behance.net/gallery/242271327/ASUS-ROG-DELTA-ll",
+    folder: "asus-rog-delta-ii",
+  },
+];
+
 const productReviews: { name: string; url: string; cat: string; hasPhotos?: boolean }[] = [
   { name: "ASUS ROG Azoth Extreme", url: "https://arabhardware.net/reviews/asus-rog-azoth-extreme-review", cat: "Keyboard", hasPhotos: true },
   { name: "ROG Keris II Ace", url: "https://arabhardware.net/reviews/rog-keris-ii-ace-review", cat: "Mouse" },
-  { name: "ASUS ROG Delta II", url: "https://arabhardware.net/reviews/asus-rog-delta-ii-review", cat: "Headset" },
+  { name: "ASUS ROG Delta II", url: "https://arabhardware.net/reviews/asus-rog-delta-ii-review", cat: "Headset", hasPhotos: true },
   { name: "Razer Kraken V4 Pro", url: "https://arabhardware.net/reviews/razer-kraken-v4-pro-review", cat: "Headset" },
   { name: "Razer Wolverine V3 Pro", url: "https://arabhardware.net/reviews/razer-wolverine-v3-pro-review", cat: "Controller" },
   { name: "ASUS ZenBook S14 2024", url: "https://arabhardware.net/reviews/asus-zenbook-s14-2024-review", cat: "Laptop" },
@@ -217,7 +236,7 @@ export default function Portfolio() {
                           <path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/>
                           <circle cx="12" cy="13" r="4"/>
                         </svg>
-                        18 Photos
+                        {behanceProjects.find(p => p.name === review.name)?.shots ?? 0} Photos
                       </button>
                       <a
                         href={review.url}
@@ -256,58 +275,62 @@ export default function Portfolio() {
 
           {/* — PHOTOS TAB — */}
           {photoTab === "photos" && (
-            <div>
-              {/* Project label + Behance link */}
-              <div className="flex items-center justify-between mb-5">
-                <div className="flex items-center gap-4">
-                  <div className="border border-[#c8a96e]/30 px-3 py-1">
-                    <span className="text-xs text-[#c8a96e] tracking-widest uppercase">ASUS ROG Azoth Extreme</span>
-                  </div>
-                  <span className="text-xs text-[#333]">Keyboard · Product Photography · 18 shots</span>
-                </div>
-                <a
-                  href="https://www.behance.net/gallery/242268755/ASUS-ROG-Azoth-Extreme"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-xs text-[#444] hover:text-[#c8a96e] transition-colors tracking-widest uppercase flex items-center gap-1.5 flex-shrink-0"
-                >
-                  Behance
-                  <svg viewBox="0 0 24 24" className="w-3 h-3 opacity-60" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/>
-                  </svg>
-                </a>
-              </div>
-
-              {/* Photo grid */}
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1.5">
-                {Array.from({ length: 18 }, (_, i) => {
-                  const num = String(i + 1).padStart(2, "0");
-                  const isFeature = i === 0 || i === 2;
-                  return (
+            <div className="flex flex-col gap-16">
+              {behanceProjects.map((project) => (
+                <div key={project.id}>
+                  {/* Project label + Behance link */}
+                  <div className="flex items-center justify-between mb-5">
+                    <div className="flex items-center gap-4">
+                      <div className="border border-[#c8a96e]/30 px-3 py-1">
+                        <span className="text-xs text-[#c8a96e] tracking-widest uppercase">{project.name}</span>
+                      </div>
+                      <span className="text-xs text-[#333]">{project.cat} · Product Photography · {project.shots} shots</span>
+                    </div>
                     <a
-                      key={num}
-                      href="https://www.behance.net/gallery/242268755/ASUS-ROG-Azoth-Extreme"
+                      href={project.behanceUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={`group relative overflow-hidden bg-[#111] block ${isFeature ? "md:col-span-2" : ""}`}
-                      style={{ aspectRatio: isFeature ? "16/9" : "4/3" }}
+                      className="text-xs text-[#444] hover:text-[#c8a96e] transition-colors tracking-widest uppercase flex items-center gap-1.5 flex-shrink-0"
                     >
-                      <img
-                        src={`${import.meta.env.BASE_URL}portfolio/asus-rog-azoth/${num}.jpg`}
-                        alt={`ASUS ROG Azoth Extreme — shot ${i + 1}`}
-                        loading="lazy"
-                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                      />
-                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300" />
-                      <div className="absolute bottom-2 left-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <span className="text-[9px] font-mono text-white/60 bg-black/50 px-1.5 py-0.5 backdrop-blur-sm">
-                          {num} / 18
-                        </span>
-                      </div>
+                      Behance
+                      <svg viewBox="0 0 24 24" className="w-3 h-3 opacity-60" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/>
+                      </svg>
                     </a>
-                  );
-                })}
-              </div>
+                  </div>
+
+                  {/* Photo grid */}
+                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1.5">
+                    {Array.from({ length: project.shots }, (_, i) => {
+                      const num = String(i + 1).padStart(2, "0");
+                      const isFeature = i === 0 || i === 2;
+                      return (
+                        <a
+                          key={num}
+                          href={project.behanceUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={`group relative overflow-hidden bg-[#111] block ${isFeature ? "md:col-span-2" : ""}`}
+                          style={{ aspectRatio: isFeature ? "16/9" : "4/3" }}
+                        >
+                          <img
+                            src={`${import.meta.env.BASE_URL}portfolio/${project.folder}/${num}.jpg`}
+                            alt={`${project.name} — shot ${i + 1}`}
+                            loading="lazy"
+                            className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                          />
+                          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300" />
+                          <div className="absolute bottom-2 left-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <span className="text-[9px] font-mono text-white/60 bg-black/50 px-1.5 py-0.5 backdrop-blur-sm">
+                              {num} / {project.shots}
+                            </span>
+                          </div>
+                        </a>
+                      );
+                    })}
+                  </div>
+                </div>
+              ))}
             </div>
           )}
         </div>
