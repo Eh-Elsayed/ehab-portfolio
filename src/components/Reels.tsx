@@ -155,7 +155,7 @@ export default function Reels() {
             >
               {/* Thumbnail — served locally */}
               <img
-                src={`/reels/${reel.id}.jpg`}
+                src={`${import.meta.env.BASE_URL}reels/${reel.id}.jpg`}
                 alt={`Reel ${(idx % REELS.length) + 1}`}
                 loading="lazy"
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
