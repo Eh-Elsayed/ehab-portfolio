@@ -68,15 +68,31 @@ const behanceProjects = [
     behanceUrl: "https://www.behance.net/gallery/242271327/ASUS-ROG-DELTA-ll",
     folder: "asus-rog-delta-ii",
   },
+  {
+    id: "asus-zenbook-s14",
+    name: "ASUS ZenBook S14 2024",
+    cat: "Laptop",
+    shots: 31,
+    behanceUrl: "https://www.behance.net/gallery/242440261/ASUS-Zenbook-S14-(2024)",
+    folder: "asus-zenbook-s14",
+  },
+  {
+    id: "razer-kraken-v4-pro",
+    name: "Razer Kraken V4 Pro",
+    cat: "Headset",
+    shots: 18,
+    behanceUrl: "https://www.behance.net/gallery/242438615/RAZER-KRAKEN-V4-Pro",
+    folder: "razer-kraken-v4-pro",
+  },
 ];
 
 const productReviews: { name: string; url: string; cat: string; hasPhotos?: boolean }[] = [
   { name: "ASUS ROG Azoth Extreme", url: "https://arabhardware.net/reviews/asus-rog-azoth-extreme-review", cat: "Keyboard", hasPhotos: true },
   { name: "ROG Keris II Ace", url: "https://arabhardware.net/reviews/rog-keris-ii-ace-review", cat: "Mouse" },
   { name: "ASUS ROG Delta II", url: "https://arabhardware.net/reviews/asus-rog-delta-ii-review", cat: "Headset", hasPhotos: true },
-  { name: "Razer Kraken V4 Pro", url: "https://arabhardware.net/reviews/razer-kraken-v4-pro-review", cat: "Headset" },
+  { name: "Razer Kraken V4 Pro", url: "https://arabhardware.net/reviews/razer-kraken-v4-pro-review", cat: "Headset", hasPhotos: true },
   { name: "Razer Wolverine V3 Pro", url: "https://arabhardware.net/reviews/razer-wolverine-v3-pro-review", cat: "Controller" },
-  { name: "ASUS ZenBook S14 2024", url: "https://arabhardware.net/reviews/asus-zenbook-s14-2024-review", cat: "Laptop" },
+  { name: "ASUS ZenBook S14 2024", url: "https://arabhardware.net/reviews/asus-zenbook-s14-2024-review", cat: "Laptop", hasPhotos: true },
   { name: "Huawei MatePad Pro 12.2", url: "https://arabhardware.net/reviews/huawei-mate-pad-pro-12.2-tablet-review", cat: "Tablet" },
   { name: "ASUS ProArt", url: "https://arabhardware.net/reviews/asus-proart-review", cat: "Monitor" },
   { name: "Intel Core Ultra 9 285K", url: "https://arabhardware.net/reviews/intel-core-ultra-9-285k-review", cat: "CPU" },
