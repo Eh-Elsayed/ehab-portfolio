@@ -27,7 +27,7 @@ export default function About() {
             <p>
               I'm a Mechatronics Engineer currently pursuing my Master's in Autonomous Vehicle
               Engineering at the{" "}
-              <span className="text-[#e8e2d9]">University of Naples Federico II</span> — 
+              <a href="https://www.international.unina.it/" target="_blank" rel="noopener noreferrer" className="text-[#e8e2d9] hover:text-[#c8a96e] transition-colors underline decoration-[#c8a96e]/30 underline-offset-2">University of Naples Federico II</a> —
               where ancient history meets cutting-edge aerospace research.
             </p>
             <p>
@@ -54,7 +54,10 @@ export default function About() {
                   <p className="text-[#e8e2d9] font-semibold font-['DM_Sans']">
                     MSc — Autonomous Vehicle Engineering
                   </p>
-                  <p className="text-[#c8a96e] text-sm mt-1">University of Naples Federico II</p>
+                  <a href="https://www.international.unina.it/" target="_blank" rel="noopener noreferrer" className="text-[#c8a96e] hover:text-[#d4b97e] text-sm mt-1 inline-flex items-center gap-1 transition-colors">
+                    University of Naples Federico II
+                    <svg viewBox="0 0 24 24" className="w-3 h-3 opacity-60" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
+                  </a>
                   <p className="text-[#555] text-sm mt-0.5">Sep 2025 – June 2027 · Naples, Italy</p>
                 </div>
               </div>
@@ -66,7 +69,10 @@ export default function About() {
                   <p className="text-[#e8e2d9] font-semibold font-['DM_Sans']">
                     BEng — Mechanical Engineering, Mechatronics
                   </p>
-                  <p className="text-[#666] text-sm mt-1">Nile University</p>
+                  <a href="https://www.nu.edu.eg/" target="_blank" rel="noopener noreferrer" className="text-[#666] hover:text-[#c8a96e] text-sm mt-1 inline-flex items-center gap-1 transition-colors">
+                    Nile University
+                    <svg viewBox="0 0 24 24" className="w-3 h-3 opacity-60" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
+                  </a>
                   <p className="text-[#555] text-sm mt-0.5">Sep 2019 – Feb 2024 · Egypt</p>
                   <p className="text-[#666] text-sm mt-1 italic">
                     Graduation Project: Autonomous Robot for Vertical Greenhouses (ROS)

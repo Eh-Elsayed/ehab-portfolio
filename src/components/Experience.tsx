@@ -13,7 +13,7 @@ const experiences = [
   {
     role: "Game Engine Engineer",
     company: "Sahure-Labs",
-    companyUrl: undefined as string | undefined,
+    companyUrl: "https://www.sahurelabs.com/",
     type: "Part-Time",
     period: "April 2026 – Present",
     location: "Remote",
@@ -24,7 +24,7 @@ const experiences = [
   {
     role: "System Design Engineer & UI/UX Designer",
     company: "Egyptian Endowments Ministry",
-    companyUrl: undefined as string | undefined,
+    companyUrl: "https://awkafonline.gov.eg/",
     type: "Full-Time",
     period: "Jun 2025 – Nov 2025",
     location: "Egypt",
@@ -68,7 +68,7 @@ const experiences = [
   {
     role: "Aerospace – Mechatronics Engineer",
     company: "Egyptian Space Agency (EGSA)",
-    companyUrl: undefined as string | undefined,
+    companyUrl: "https://egsa.gov.eg/",
     type: "Full-Time",
     period: "May – Oct 2024",
     location: "Egypt",
@@ -79,7 +79,7 @@ const experiences = [
   {
     role: "Junior Research Assistant",
     company: "Smart Engineering Systems Research Center (SESC)",
-    companyUrl: undefined as string | undefined,
+    companyUrl: "https://sesc.nu.edu.eg/",
     type: "Intern",
     period: "Oct – Dec 2024",
     location: "Nile University",
@@ -90,7 +90,7 @@ const experiences = [
   {
     role: "Junior Research Assistant",
     company: "Nanoelectronics Integrated Systems Research Center (NISC)",
-    companyUrl: undefined as string | undefined,
+    companyUrl: "https://nisc.nu.edu.eg/",
     type: "Intern",
     period: "Feb – Apr 2024",
     location: "Nile University",
