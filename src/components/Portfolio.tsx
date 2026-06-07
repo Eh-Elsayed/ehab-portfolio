@@ -49,8 +49,8 @@ const youtubeVideos = [
   },
 ];
 
-const productReviews = [
-  { name: "ASUS ROG Azoth Extreme", url: "https://arabhardware.net/reviews/asus-rog-azoth-extreme-review", cat: "Keyboard" },
+const productReviews: { name: string; url: string; cat: string; gallery?: string }[] = [
+  { name: "ASUS ROG Azoth Extreme", url: "https://arabhardware.net/reviews/asus-rog-azoth-extreme-review", cat: "Keyboard", gallery: "gallery-asus-rog-azoth" },
   { name: "ROG Keris II Ace", url: "https://arabhardware.net/reviews/rog-keris-ii-ace-review", cat: "Mouse" },
   { name: "Razer Kraken V4 Pro", url: "https://arabhardware.net/reviews/razer-kraken-v4-pro-review", cat: "Headset" },
   { name: "ASUS ZenBook S14 2024", url: "https://arabhardware.net/reviews/asus-zenbook-s14-2024-review", cat: "Laptop" },
@@ -90,7 +90,7 @@ export default function Portfolio() {
         </div>
 
         {/* Behance Photography Showcase */}
-        <div className="mb-20">
+        <div id="gallery-asus-rog-azoth" className="mb-20">
           <div className="flex items-center gap-4 mb-8">
             <span className="text-xs tracking-[0.25em] uppercase text-[#555]">
               Behance — Product Photography
@@ -206,7 +206,43 @@ export default function Portfolio() {
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
-            {productReviews.map((review) => (
+            {productReviews.map((review) =>
+              review.gallery ? (
+                // Special card: has both a review link and a scroll-to-gallery button
+                <div
+                  key={review.url}
+                  className="group flex flex-col justify-between p-4 bg-[#0a0a0a] border border-[#c8a96e]/25 hover:border-[#c8a96e]/50 hover:bg-[#0d0d0b] transition-all duration-300"
+                >
+                  <div>
+                    <span className="text-[#c8a96e]/60 text-xs tracking-widest uppercase">
+                      {review.cat}
+                    </span>
+                    <p className="text-[#e8e2d9] text-sm font-['DM_Sans'] mt-1 leading-snug">
+                      {review.name}
+                    </p>
+                  </div>
+                  <div className="flex items-center justify-between mt-3 pt-3 border-t border-[#1a1a1a]">
+                    <button
+                      onClick={() => document.getElementById(review.gallery!)?.scrollIntoView({ behavior: "smooth", block: "start" })}
+                      className="text-[9px] tracking-widest uppercase text-[#c8a96e]/70 hover:text-[#c8a96e] transition-colors flex items-center gap-1"
+                    >
+                      <svg viewBox="0 0 24 24" className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/>
+                        <circle cx="12" cy="13" r="4"/>
+                      </svg>
+                      18 Photos ↑
+                    </button>
+                    <a
+                      href={review.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-xs text-[#444] hover:text-[#c8a96e]/60 transition-colors"
+                    >
+                      Review →
+                    </a>
+                  </div>
+                </div>
+              ) : (
               <a
                 key={review.url}
                 href={review.url}
@@ -226,7 +262,8 @@ export default function Portfolio() {
                   →
                 </span>
               </a>
-            ))}
+              )
+            )}
           </div>
         </div>
       </div>
