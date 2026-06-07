@@ -10,8 +10,8 @@ const projects = [
   {
     num: "02",
     title: "Embedded Smart Greenhouse Control",
-    subtitle: "Hackathon Winner",
-    desc: "Automated control system for irrigation, temperature, and humidity regulation. Reduced manual intervention while improving resource efficiency. 2nd place at Future of Data Center Techathon.",
+    subtitle: "16th UGRF · 2nd Place",
+    desc: "Automated control system for irrigation, temperature, and humidity regulation using embedded hardware and IoT sensors. Awarded 2nd Place at the 4th Egyptian Junior Researcher Competition — 16th UGRF Special Edition, Nile University, August 2023.",
     tags: ["Arduino", "IoT", "Sensors", "Automation"],
     highlight: false,
   },

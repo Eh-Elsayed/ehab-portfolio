@@ -5,6 +5,7 @@ import Experience from "./components/Experience";
 import Projects from "./components/Projects";
 import Portfolio from "./components/Portfolio";
 import Reels from "./components/Reels";
+import Awards from "./components/Awards";
 import Contact from "./components/Contact";
 import Navigation from "./components/Navigation";
 import "./index.css";
@@ -16,7 +17,7 @@ export default function App() {
   useEffect(() => {
     const handleScroll = () => {
       setScrollY(window.scrollY);
-      const sections = ["hero", "about", "experience", "projects", "portfolio", "contact"];
+      const sections = ["hero", "about", "experience", "projects", "awards", "portfolio", "contact"];
       for (const id of sections) {
         const el = document.getElementById(id);
         if (el) {
@@ -39,6 +40,7 @@ export default function App() {
       <section id="about"><About /></section>
       <section id="experience"><Experience /></section>
       <section id="projects"><Projects /></section>
+      <section id="awards"><Awards /></section>
       <section id="portfolio"><Portfolio /></section>
       <section id="reels"><Reels /></section>
       <section id="contact"><Contact /></section>
