@@ -234,6 +234,9 @@ export default function Portfolio() {
         {/* Product Photography & Reviews — merged, no tabs */}
         <div>
           <div className="flex items-center gap-4 mb-8">
+            <span className="text-xs tracking-[0.25em] uppercase text-[#555]">
+              Product Photography & Reviews
+            </span>
             <div className="flex-1 h-px bg-[#1a1a1a]" />
           </div>
 
