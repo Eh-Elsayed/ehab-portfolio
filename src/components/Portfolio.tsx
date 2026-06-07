@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 const youtubeVideos = [
   {
     title: "RTX 5090 كروت",
@@ -49,8 +51,8 @@ const youtubeVideos = [
   },
 ];
 
-const productReviews: { name: string; url: string; cat: string; gallery?: string }[] = [
-  { name: "ASUS ROG Azoth Extreme", url: "https://arabhardware.net/reviews/asus-rog-azoth-extreme-review", cat: "Keyboard", gallery: "gallery-asus-rog-azoth" },
+const productReviews: { name: string; url: string; cat: string; hasPhotos?: boolean }[] = [
+  { name: "ASUS ROG Azoth Extreme", url: "https://arabhardware.net/reviews/asus-rog-azoth-extreme-review", cat: "Keyboard", hasPhotos: true },
   { name: "ROG Keris II Ace", url: "https://arabhardware.net/reviews/rog-keris-ii-ace-review", cat: "Mouse" },
   { name: "ASUS ROG Delta II", url: "https://arabhardware.net/reviews/asus-rog-delta-ii-review", cat: "Headset" },
   { name: "Razer Kraken V4 Pro", url: "https://arabhardware.net/reviews/razer-kraken-v4-pro-review", cat: "Headset" },
@@ -78,9 +80,13 @@ const productReviews: { name: string; url: string; cat: string; gallery?: string
 ];
 
 export default function Portfolio() {
+  const [photoTab, setPhotoTab] = useState<"reviews" | "photos">("reviews");
+
   return (
     <div className="bg-[#080808] py-32">
       <div className="max-w-7xl mx-auto px-6">
+
+        {/* Section header */}
         <div className="flex items-end justify-between mb-16">
           <div>
             <div className="flex items-center gap-3 mb-2">
@@ -102,66 +108,6 @@ export default function Portfolio() {
           </a>
         </div>
 
-        {/* Behance Photography Showcase */}
-        <div id="gallery-asus-rog-azoth" className="mb-20">
-          <div className="flex items-center gap-4 mb-8">
-            <span className="text-xs tracking-[0.25em] uppercase text-[#555]">
-              Behance — Product Photography
-            </span>
-            <div className="flex-1 h-px bg-[#1a1a1a]" />
-            <a
-              href="https://www.behance.net/gallery/242268755/ASUS-ROG-Azoth-Extreme"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-xs text-[#444] hover:text-[#c8a96e] transition-colors tracking-widest uppercase flex items-center gap-1.5 flex-shrink-0"
-            >
-              View on Behance
-              <svg viewBox="0 0 24 24" className="w-3 h-3 opacity-60" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/>
-              </svg>
-            </a>
-          </div>
-
-          {/* Project label */}
-          <div className="flex items-center gap-4 mb-5">
-            <div className="border border-[#c8a96e]/30 px-3 py-1">
-              <span className="text-xs text-[#c8a96e] tracking-widest uppercase">ASUS ROG Azoth Extreme</span>
-            </div>
-            <span className="text-xs text-[#333]">Keyboard · Product Photography · 18 shots</span>
-          </div>
-
-          {/* Photo grid */}
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1.5">
-            {Array.from({ length: 18 }, (_, i) => {
-              const num = String(i + 1).padStart(2, "0");
-              const isFeature = i === 0 || i === 2;
-              return (
-                <a
-                  key={num}
-                  href="https://www.behance.net/gallery/242268755/ASUS-ROG-Azoth-Extreme"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`group relative overflow-hidden bg-[#111] block ${isFeature ? "md:col-span-2" : ""}`}
-                  style={{ aspectRatio: isFeature ? "16/9" : "4/3" }}
-                >
-                  <img
-                    src={`${import.meta.env.BASE_URL}portfolio/asus-rog-azoth/${num}.jpg`}
-                    alt={`ASUS ROG Azoth Extreme — shot ${i + 1}`}
-                    loading="lazy"
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300" />
-                  <div className="absolute bottom-2 left-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <span className="text-[9px] font-mono text-white/60 bg-black/50 px-1.5 py-0.5 backdrop-blur-sm">
-                      {num} / 18
-                    </span>
-                  </div>
-                </a>
-              );
-            })}
-          </div>
-        </div>
-
         {/* YouTube Videos */}
         <div className="mb-16">
           <div className="flex items-center gap-4 mb-8">
@@ -180,7 +126,6 @@ export default function Portfolio() {
                 rel="noopener noreferrer"
                 className="group relative overflow-hidden bg-[#0f0f0f] border border-[#1a1a1a] hover:border-[#c8a96e]/25 transition-all duration-300 block"
               >
-                {/* Thumbnail */}
                 <div className="relative aspect-video overflow-hidden">
                   <img
                     src={`https://img.youtube.com/vi/${video.id}/mqdefault.jpg`}
@@ -188,14 +133,12 @@ export default function Portfolio() {
                     className="w-full h-full object-cover opacity-60 group-hover:opacity-80 transition-opacity duration-300 group-hover:scale-105"
                     style={{ transition: "opacity 0.3s, transform 0.5s" }}
                   />
-                  {/* Play button overlay */}
                   <div className="absolute inset-0 flex items-center justify-center">
                     <div className="w-8 h-8 rounded-full bg-[#c8a96e]/0 border border-[#c8a96e]/0 flex items-center justify-center group-hover:bg-[#c8a96e]/20 group-hover:border-[#c8a96e]/40 transition-all duration-300">
                       <div className="w-0 h-0 border-t-[5px] border-t-transparent border-b-[5px] border-b-transparent border-l-[8px] border-l-[#c8a96e] opacity-0 group-hover:opacity-100 transition-opacity ml-1" />
                     </div>
                   </div>
                 </div>
-
                 <div className="p-3">
                   <p className="text-[#e8e2d9] text-xs font-['DM_Sans'] leading-snug group-hover:text-white transition-colors line-clamp-1">
                     {video.title}
@@ -209,76 +152,166 @@ export default function Portfolio() {
           </div>
         </div>
 
-        {/* Product Photography */}
+        {/* Product Photography — tabbed */}
         <div>
-          <div className="flex items-center gap-4 mb-8">
-            <span className="text-xs tracking-[0.25em] uppercase text-[#555]">
+          {/* Tab header row */}
+          <div className="flex items-center gap-0 mb-8">
+            <span className="text-xs tracking-[0.25em] uppercase text-[#555] mr-6 hidden sm:inline">
               Product Photography & Reviews
             </span>
-            <div className="flex-1 h-px bg-[#1a1a1a]" />
+
+            {/* Tab buttons */}
+            <div className="flex border border-[#1a1a1a]">
+              <button
+                onClick={() => setPhotoTab("reviews")}
+                className={`px-5 py-2 text-xs tracking-widest uppercase transition-all duration-200 ${
+                  photoTab === "reviews"
+                    ? "bg-[#c8a96e]/10 text-[#c8a96e] border-r border-[#c8a96e]/20"
+                    : "text-[#444] hover:text-[#666] border-r border-[#1a1a1a]"
+                }`}
+              >
+                Reviews
+              </button>
+              <button
+                onClick={() => setPhotoTab("photos")}
+                className={`px-5 py-2 text-xs tracking-widest uppercase transition-all duration-200 flex items-center gap-2 ${
+                  photoTab === "photos"
+                    ? "bg-[#c8a96e]/10 text-[#c8a96e]"
+                    : "text-[#444] hover:text-[#666]"
+                }`}
+              >
+                <svg viewBox="0 0 24 24" className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/>
+                  <circle cx="12" cy="13" r="4"/>
+                </svg>
+                Photos
+              </button>
+            </div>
+
+            <div className="flex-1 h-px bg-[#1a1a1a] ml-4" />
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
-            {productReviews.map((review) =>
-              review.gallery ? (
-                // Special card: has both a review link and a scroll-to-gallery button
-                <div
-                  key={review.url}
-                  className="group flex flex-col justify-between p-4 bg-[#0a0a0a] border border-[#c8a96e]/25 hover:border-[#c8a96e]/50 hover:bg-[#0d0d0b] transition-all duration-300"
-                >
-                  <div>
-                    <span className="text-[#c8a96e]/60 text-xs tracking-widest uppercase">
-                      {review.cat}
-                    </span>
-                    <p className="text-[#e8e2d9] text-sm font-['DM_Sans'] mt-1 leading-snug">
-                      {review.name}
-                    </p>
+          {/* — REVIEWS TAB — */}
+          {photoTab === "reviews" && (
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
+              {productReviews.map((review) =>
+                review.hasPhotos ? (
+                  <div
+                    key={review.url}
+                    className="group flex flex-col justify-between p-4 bg-[#0a0a0a] border border-[#c8a96e]/25 hover:border-[#c8a96e]/50 hover:bg-[#0d0d0b] transition-all duration-300"
+                  >
+                    <div>
+                      <span className="text-[#c8a96e]/60 text-xs tracking-widest uppercase">
+                        {review.cat}
+                      </span>
+                      <p className="text-[#e8e2d9] text-sm font-['DM_Sans'] mt-1 leading-snug">
+                        {review.name}
+                      </p>
+                    </div>
+                    <div className="flex items-center justify-between mt-3 pt-3 border-t border-[#1a1a1a]">
+                      <button
+                        onClick={() => setPhotoTab("photos")}
+                        className="text-[9px] tracking-widest uppercase text-[#c8a96e]/70 hover:text-[#c8a96e] transition-colors flex items-center gap-1"
+                      >
+                        <svg viewBox="0 0 24 24" className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="2">
+                          <path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/>
+                          <circle cx="12" cy="13" r="4"/>
+                        </svg>
+                        18 Photos
+                      </button>
+                      <a
+                        href={review.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-xs text-[#444] hover:text-[#c8a96e]/60 transition-colors"
+                      >
+                        Review →
+                      </a>
+                    </div>
                   </div>
-                  <div className="flex items-center justify-between mt-3 pt-3 border-t border-[#1a1a1a]">
-                    <button
-                      onClick={() => document.getElementById(review.gallery!)?.scrollIntoView({ behavior: "smooth", block: "start" })}
-                      className="text-[9px] tracking-widest uppercase text-[#c8a96e]/70 hover:text-[#c8a96e] transition-colors flex items-center gap-1"
-                    >
-                      <svg viewBox="0 0 24 24" className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="2">
-                        <path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/>
-                        <circle cx="12" cy="13" r="4"/>
-                      </svg>
-                      18 Photos ↑
-                    </button>
+                ) : (
+                  <a
+                    key={review.url}
+                    href={review.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex flex-col justify-between p-4 bg-[#0a0a0a] border border-[#1a1a1a] hover:border-[#c8a96e]/20 hover:bg-[#0d0d0b] transition-all duration-300"
+                  >
+                    <div>
+                      <span className="text-[#444] text-xs tracking-widest uppercase group-hover:text-[#c8a96e]/60 transition-colors">
+                        {review.cat}
+                      </span>
+                      <p className="text-[#888] text-sm font-['DM_Sans'] mt-1 group-hover:text-[#e8e2d9] transition-colors leading-snug">
+                        {review.name}
+                      </p>
+                    </div>
+                    <span className="text-xs text-[#333] group-hover:text-[#c8a96e]/40 transition-colors mt-3 self-end">
+                      →
+                    </span>
+                  </a>
+                )
+              )}
+            </div>
+          )}
+
+          {/* — PHOTOS TAB — */}
+          {photoTab === "photos" && (
+            <div>
+              {/* Project label + Behance link */}
+              <div className="flex items-center justify-between mb-5">
+                <div className="flex items-center gap-4">
+                  <div className="border border-[#c8a96e]/30 px-3 py-1">
+                    <span className="text-xs text-[#c8a96e] tracking-widest uppercase">ASUS ROG Azoth Extreme</span>
+                  </div>
+                  <span className="text-xs text-[#333]">Keyboard · Product Photography · 18 shots</span>
+                </div>
+                <a
+                  href="https://www.behance.net/gallery/242268755/ASUS-ROG-Azoth-Extreme"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs text-[#444] hover:text-[#c8a96e] transition-colors tracking-widest uppercase flex items-center gap-1.5 flex-shrink-0"
+                >
+                  Behance
+                  <svg viewBox="0 0 24 24" className="w-3 h-3 opacity-60" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/>
+                  </svg>
+                </a>
+              </div>
+
+              {/* Photo grid */}
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1.5">
+                {Array.from({ length: 18 }, (_, i) => {
+                  const num = String(i + 1).padStart(2, "0");
+                  const isFeature = i === 0 || i === 2;
+                  return (
                     <a
-                      href={review.url}
+                      key={num}
+                      href="https://www.behance.net/gallery/242268755/ASUS-ROG-Azoth-Extreme"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-xs text-[#444] hover:text-[#c8a96e]/60 transition-colors"
+                      className={`group relative overflow-hidden bg-[#111] block ${isFeature ? "md:col-span-2" : ""}`}
+                      style={{ aspectRatio: isFeature ? "16/9" : "4/3" }}
                     >
-                      Review →
+                      <img
+                        src={`${import.meta.env.BASE_URL}portfolio/asus-rog-azoth/${num}.jpg`}
+                        alt={`ASUS ROG Azoth Extreme — shot ${i + 1}`}
+                        loading="lazy"
+                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300" />
+                      <div className="absolute bottom-2 left-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <span className="text-[9px] font-mono text-white/60 bg-black/50 px-1.5 py-0.5 backdrop-blur-sm">
+                          {num} / 18
+                        </span>
+                      </div>
                     </a>
-                  </div>
-                </div>
-              ) : (
-              <a
-                key={review.url}
-                href={review.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group flex flex-col justify-between p-4 bg-[#0a0a0a] border border-[#1a1a1a] hover:border-[#c8a96e]/20 hover:bg-[#0d0d0b] transition-all duration-300"
-              >
-                <div>
-                  <span className="text-[#444] text-xs tracking-widest uppercase group-hover:text-[#c8a96e]/60 transition-colors">
-                    {review.cat}
-                  </span>
-                  <p className="text-[#888] text-sm font-['DM_Sans'] mt-1 group-hover:text-[#e8e2d9] transition-colors leading-snug">
-                    {review.name}
-                  </p>
-                </div>
-                <span className="text-xs text-[#333] group-hover:text-[#c8a96e]/40 transition-colors mt-3 self-end">
-                  →
-                </span>
-              </a>
-              )
-            )}
-          </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
         </div>
+
       </div>
     </div>
   );
