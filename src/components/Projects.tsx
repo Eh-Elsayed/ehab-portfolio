@@ -1,10 +1,10 @@
 const projects = [
   {
     num: "01",
-    title: "Autonomous Greenhouse Robot",
-    subtitle: "Graduation Project",
-    desc: "ROS-based autonomous robot for efficient navigation and real-time data acquisition in vertical greenhouse environments. Optimized plant monitoring and maintenance through intelligent path planning.",
-    tags: ["ROS", "Python", "Autonomous Navigation", "Embedded Systems"],
+    title: "UpGrow: Autonomous Greenhouse Robot",
+    subtitle: "Graduation Project · Team Leader",
+    desc: "Led a 6-person team rebuilding an undocumented legacy robot into a mecanum-drive platform with manual, remote, and autonomous modes. Built the IoT smart-shelf system (sensors, Firebase, Blynk), integrated and tested the stepper motors and drivers, and fully rewired the robot. ROS navigation (GMapping, AMCL, move_base) was validated in Gazebo, with RGB-D mapping on hardware using a RealSense D435i and RTAB-Map.",
+    tags: ["ROS", "Gazebo", "IoT", "Mecanum Drive", "Team Leadership"],
     highlight: true,
   },
   {
