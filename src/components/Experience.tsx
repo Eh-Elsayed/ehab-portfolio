@@ -1,16 +1,5 @@
 const experiences = [
   {
-    role: "Intern Research Assistant",
-    company: "PRISMA Lab",
-    companyUrl: "https://prisma.dieti.unina.it/",
-    type: "Intern",
-    period: "May 2026 – Present",
-    location: "Naples, Italy",
-    desc: "Working on the assembly and testing of the Solo 12 quadruped robot, supporting hardware setup, integration, and experimental robotics activities.",
-    tags: ["Quadruped Robotics", "Hardware Integration", "Solo 12", "Experimental Robotics"],
-    current: true,
-  },
-  {
     role: "Game Engine Engineer",
     company: "Sahure-Labs",
     companyUrl: "https://www.sahurelabs.com/",
